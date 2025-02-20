@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/Dashboard/Dashboard';
-import Login from './pages/Login/Login';
-import SignUp from './pages/SignUp/SignUp';
+import Login from './pages/Auth/Login';
+import SignUp from './pages/Auth/SignUp';
 import './App.css'
 const routes = (
   <Router>
