@@ -21,7 +21,6 @@ export const createUser = ( async(req, res) => {
       lastname,
       email,
       password, 
-      confirmPassword, 
     });
 
     res.status(201).json({ message: "User registered successfully", user: newUser });

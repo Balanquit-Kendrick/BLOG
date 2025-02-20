@@ -28,10 +28,7 @@ const User = db.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  confirmPassword: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  }
+  
 }, {
   hooks: {
     beforeCreate: async (user) => {
