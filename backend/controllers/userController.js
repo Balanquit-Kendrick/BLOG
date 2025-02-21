@@ -3,10 +3,8 @@ import User from '../models/User.js';
 import jwt from 'jsonwebtoken'
 import { authenticateToken } from '../utilities.js';
 
-export const createUser = (authenticateToken, async(req, res) => {
-  console.log('Signup Request Received');
-  
-  const { firstname, lastname, email,password, confirmPassword } = req.body;
+export const signUpUser = (authenticateToken, async(req, res) => {
+  const { name, email,password, confirmPassword } = req.body;
   
   if (password !== confirmPassword) {
     return res.status(400).json({ error: "Passwords do not match" });
@@ -19,8 +17,7 @@ export const createUser = (authenticateToken, async(req, res) => {
     }
 
     const newUser = await User.create({
-      firstname,
-      lastname,
+      name,
       email,
       password, 
     });
@@ -37,6 +34,37 @@ export const createUser = (authenticateToken, async(req, res) => {
 
   } catch (error) {
     console.error("Signup Error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
+export const signInUser = (authenticateToken, async(req, res) => {
+  const { email, password } = req.body;
+  
+  try {
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+
+    res.status(200).json({
+      message: "Login successful",
+      accessToken: accessToken,
+      user: user,
+    });
+
+  } catch (error) {
+    console.error("Login Error:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
