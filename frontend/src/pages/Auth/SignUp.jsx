@@ -1,5 +1,7 @@
 import React, { useState }from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axiosInstance from '@/utils/axiosInstance';
+import { validateEmail } from '@/utils/helper';
 
 const SignUp = () => {
   const [ firstname, setFirstname ] = useState('');
@@ -7,17 +9,57 @@ const SignUp = () => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ confirmPassword, setConfirmPassword ] = useState('');
+  const [ error, setError ] = useState('');
 
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     if(!firstname || !lastname || !email || !password || !confirmPassword){
+      setError('Please fill all fields')
       console.log('Please fill all fields');
+      return;
+    }
+
+    if(!validateEmail(email)){
+      setError("Please enter a valid email.");
+      console.log('Invalid email');
+      return;
     }
 
     if (password !== confirmPassword){
+      setError("Please enter a valid email.");
       console.log('mismatch password');
+      return;
+    }
+
+    setError("")
+
+    try{
+      const response = await axiosInstance.post("/users/auth/signup", {
+        firstname,
+        lastname,
+        email,
+        password,
+        confirmPassword
+      })
+
+      if (response.data?.error){
+        setError(response.data.message)
+        return
+      }
+
+      if (response.data?.accessToken){
+        localStorage.setItem("token", response.data.accessToken)
+        navigate('/')
+      }
+
+    } catch (error){
+      if(error.response?.data?.message){
+        setError(error.response.data.message)
+      }else{
+        setError('An error occurred while signing up. Please try again.')
+      }
     }
   }
 
