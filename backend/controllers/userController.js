@@ -1,7 +1,9 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
+import jwt from 'jsonwebtoken'
+import { authenticateToken } from '../utilities.js';
 
-export const createUser = ( async(req, res) => {
+export const createUser = (authenticateToken, async(req, res) => {
   console.log('Signup Request Received');
   
   const { firstname, lastname, email,password, confirmPassword } = req.body;
@@ -23,7 +25,15 @@ export const createUser = ( async(req, res) => {
       password, 
     });
 
-    res.status(201).json({ message: "User registered successfully", user: newUser });
+    const accessToken = jwt.sign({ newUser }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "36000m",    
+    });
+
+    res.status(201).json({ 
+      message: "User registered successfully", 
+      user: newUser,
+      accessToken: accessToken
+    });
 
   } catch (error) {
     console.error("Signup Error:", error);
