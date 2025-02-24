@@ -10,14 +10,21 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 export function SignInForm({
   className,
+  error,
+  response,
   handleSignUp,
   ...props
 }) 
 
+
 {
+  const [errorFields, setErrorFields] = useState('');
+  const [errorEmail, setErrorEmail] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -25,6 +32,18 @@ export function SignInForm({
     handleSignUp(data); 
   }
 
+  useEffect(() => {
+    if (!error) return;
+
+    if (error.includes('fields')) {
+      setErrorFields(error);
+      setErrorEmail(''); 
+    } else if (error.includes('valid')) {
+      setErrorEmail(error);
+      setErrorFields(''); 
+    }
+  }, [error]);
+  
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -32,11 +51,10 @@ export function SignInForm({
           <CardTitle className="text-2xl">Sign In</CardTitle>
         </CardHeader>
         <CardContent>
-          <form
-              onSubmit={handleSubmit}
-            >
+          <form onSubmit={handleSubmit} noValidate>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
+                <Label className="text-red-500 font-light">{errorFields ? '*'+errorFields : ''}</Label>
                 <Label htmlFor="email">Name</Label>
                 <Input
                   id="name"
@@ -47,6 +65,7 @@ export function SignInForm({
                 />
               </div>
               <div className="grid gap-2">
+                <Label className="text-red-500 font-light">{errorEmail ? '*'+errorEmail : ''}</Label>
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"

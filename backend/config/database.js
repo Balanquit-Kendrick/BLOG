@@ -11,6 +11,6 @@ export const db = new Sequelize(
     {
         host: 'localhost',
         dialect: 'mysql',
-        logging: true 
+        logging: false 
     }
 );

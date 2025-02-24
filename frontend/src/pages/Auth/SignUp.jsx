@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { SignInForm } from "@/components/signin-form"
 const SignUp = () => {
   const [ error, setError ] = useState('');
-
+  const [ progress, setProgress ] = useState(13)
+  const [ res, setRes ] = useState('');
   const navigate = useNavigate();
 
   const handleSignUp = async (formData) => {
@@ -25,8 +26,7 @@ const SignUp = () => {
     }
 
     if (password !== confirmPassword){
-      setError("Please enter a valid email.");
-      console.log('mismatch password');
+      setError("Mismatch password.");
       return;
     }
 
@@ -47,7 +47,8 @@ const SignUp = () => {
 
       if (response.data?.accessToken){
         localStorage.setItem("token", response.data.accessToken)
-        navigate('/')
+        setRes(response.data.message)
+        navigate('/login')
       }
 
     } catch (error){
@@ -63,7 +64,7 @@ const SignUp = () => {
     <div>
       <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-sm">
-          <SignInForm handleSignUp={handleSignUp}/>
+          <SignInForm handleSignUp={handleSignUp} error={error} message={res}/>
         </div>
       </div>
     </div>
