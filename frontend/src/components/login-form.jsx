@@ -10,20 +10,37 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 export function LoginForm({
   className,
   handleLogin,
+  error,
   ...props
 }) 
 
 {
+  const [errorFields, setErrorFields] = useState('');
+  const [errorEmail, setErrorEmail] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
     handleLogin(data); 
   }
+  
+  useEffect(() => {
+    if (!error) return;
+
+    if (error.includes('fields')) {
+      setErrorFields(error);
+      setErrorEmail(''); 
+    } else if (error.includes('Invalid')) {
+      setErrorEmail(error);
+      setErrorFields(''); 
+    }
+  }, [error]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -35,17 +52,20 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
+                <Label className="text-red-500 font-light mb-2">{errorFields ? '*'+errorFields : ''}</Label>
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
                   name="email"
                   placeholder="m@example.com"
+                  className={errorEmail ? "border-red-500" : ""}
                   required
                 />
+                <Label className="text-red-500 font-light">{errorEmail ? '*'+errorEmail : ''}</Label>
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">

@@ -15,13 +15,11 @@ const Login = () => {
 
     if(!email || !password ){
       setError('Please fill all fields')
-      console.log('Please fill all fields');
       return;
     }
 
     if(!validateEmail(email)){
-      setError("Please enter a valid email.");
-      console.log('Invalid email');
+      setError("Invalid Email");
       return;
     }
 
@@ -30,7 +28,6 @@ const Login = () => {
         email,
         password,
       })
-      console.log('response', response);
 
       if (response.data?.error){
         setError(response.data.message)
@@ -55,7 +52,7 @@ const Login = () => {
     <div>
       <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-sm">
-          <LoginForm handleLogin={handleLogin}/>
+          <LoginForm handleLogin={handleLogin} error={error}/>
         </div>
       </div>
     </div>
