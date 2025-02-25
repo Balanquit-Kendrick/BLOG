@@ -52,7 +52,7 @@ export function LoginForm({
           <form onSubmit={handleSubmit} noValidate>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label className="text-red-500 font-light mb-2">{errorFields ? '*'+errorFields : ''}</Label>
+                {errorFields ? <Label className="text-red-500 font-light mb-2">{'*'+errorFields}</Label> : ''}
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
