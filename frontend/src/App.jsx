@@ -5,12 +5,15 @@ import Login from './pages/Auth/Login';
 import SignUp from './pages/Auth/SignUp';
 import LandingPage from './pages/LandingPage/LandingPage';
 import './App.css'
+import ProtectedRoute from './components/protected-routes';
 
 const routes = (
   <Router>
     <Routes>
       <Route path='/' exact element={<LandingPage />}/>
-      <Route path='/dashboard' exact element={<Dashboard />}/>
+      <Route element={<ProtectedRoute/>}> 
+        <Route path='/dashboard' exact element={<Dashboard />}/>
+      </Route>
       <Route path='/login' exact element={<Login />}/>
       <Route path='/signup' exact element={<SignUp />}/>
     </Routes>
@@ -19,7 +22,7 @@ const routes = (
 
 const App = () => {
   return (
-    <div>
+    <div data-theme="dark">
       {routes}
     </div>
   )
