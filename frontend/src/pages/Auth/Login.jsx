@@ -1,7 +1,9 @@
+import Loading from '@/components/loading';
 import { LoginForm } from '@/components/login-form'
 import axiosInstance from '@/utils/axiosInstance';
 import { validateEmail } from '@/utils/helper';
-import React, { useState } from 'react'
+import { checkToken } from '@/utils/tokenChecker';
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
@@ -9,10 +11,17 @@ const Login = () => {
   const [ error, setError ] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = checkToken()
+    if(token){
+      navigate('/dashboard')
+    }
+  })
+
   const handleLogin = async (formData) => {
     
   const { email, password } = formData;
-
+  
     if(!email || !password ){
       setError('Please fill all fields')
       return;
@@ -52,6 +61,7 @@ const Login = () => {
     <div>
       <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-sm">
+          {<Loading />}
           <LoginForm handleLogin={handleLogin} error={error}/>
         </div>
       </div>

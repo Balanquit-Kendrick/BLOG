@@ -1,17 +1,46 @@
 import Loading from '@/components/loading'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import SVGBlog from '@/assets/blog.svg'
 import './dashboard.css'
+import axiosInstance from '@/utils/axiosInstance'
 
 const Dashboard = () => {
+
+  const [user, setUser] = useState(null);
+  useEffect(()=> {
+    const token = localStorage.getItem('token');
+    console.log('token', token);
+    
+    getUserInfo(token).then(setUser)
+  }, [])
+
+  const getUserInfo = async (token) => {
+    try {
+      const response = await axiosInstance.get("/users/auth/get-user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      return response.data.user;
+    } catch (error) {
+      console.error('Error:', error.response.data);
+    }
+  }
+
   return (
     <div className="relative min-w-[1200px] bg-secondary min-h-screen flex items-center justify-center">
       {<Loading />}
       
       <div className="relative z-0 w-[1200px] min-h-screen flex flex-col mx-auto">
         <div className="flex fixed left-0 top-0 w-full bg-background items-center justify-center z-50">
-          <div className="w-[1200px] h-12 flex items-center justify-center">
-            Nav
+          <div className="w-[1200px] h-12 flex items-center justify-between">
+            <Link to='/dashboard'>
+              <img src={SVGBlog} width={'32px'} />
+            </Link>
+            <div className='flex h-[32px] w-[32px] rounded-full justify-center items-center font-bold text-background bg-foreground'>
+              K
+            </div>
           </div>
         </div>
 
