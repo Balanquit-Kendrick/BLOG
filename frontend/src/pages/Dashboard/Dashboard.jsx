@@ -6,54 +6,20 @@ import './dashboard.css'
 import axiosInstance from '@/utils/axiosInstance'
 import { Button } from '@/components/ui/button'
 import { getInitials } from '@/utils/helper'
+import { DropdownMenuDemo } from '@/components/profile-drop'
 
 const Dashboard = () => {
-
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  useEffect(()=> {
-    const fetchUser = async () => {
-      const token = localStorage.getItem('token');
-      const userInfo = await getUserInfo(token)
-      setUser(userInfo);
-    }
-
-    fetchUser();
-  }, [])
-
-  const getUserInfo = async (token) => {
-    try {
-      const response = await axiosInstance.get("/users/auth/get-user", {
-        headers: {
-          authorization: `Bearer ${token}`,
-         }
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error:', error.response.data);
-    }
-  }
-  console.log('user', user)
-  const handleLogout = () =>{
-    localStorage.removeItem('token');
-    navigate('/login');
-  }
 
   return (
     <div className="relative min-w-[1200px] bg-secondary min-h-screen flex items-center justify-center">
       {<Loading />}
       <div className="relative z-0 w-[1200px] min-h-screen flex flex-col mx-auto">
         <div className="flex fixed left-0 top-0 w-full bg-background items-center justify-center z-50">
-          <div className="w-[1200px] h-12 flex items-center justify-between">
+          <div className="w-[1200px] h-12 px-10 flex items-center justify-between">
             <Link to='/dashboard'>
               <img src={SVGBlog} width={'32px'} />
             </Link>
-            <div className='flex h-[32px] w-[32px] rounded-full justify-center items-center font-bold text-background bg-foreground'>
-            {getInitials(user?.name) ?? "Loading..."}
-            </div>
-            <div>
-              <Button onClick={handleLogout}>Logout</Button>
-            </div>
+            <DropdownMenuDemo />
           </div>
         </div>
 
