@@ -3,7 +3,7 @@ import User from '../models/User.js';
 import jwt from 'jsonwebtoken'
 import { authenticateToken } from '../utilities.js';
 
-export const signUpUser = (authenticateToken, async(req, res) => {
+export const signUpUser = async(req, res) => {
   const { name, email,password, confirmPassword } = req.body;
   
   if (password !== confirmPassword) {
@@ -36,12 +36,12 @@ export const signUpUser = (authenticateToken, async(req, res) => {
     console.error("Signup Error:", error);
     res.status(500).json({ error: "Server error" });
   }
-});
+};
 
 
-export const signInUser = (authenticateToken, async(req, res) => {
+export const signInUser = async(req, res) => {
   const { email, password } = req.body;
-  
+
   try {
     const user = await User.findOne({ where: { email } });
 
@@ -67,4 +67,18 @@ export const signInUser = (authenticateToken, async(req, res) => {
     console.error("Login Error:", error);
     res.status(500).json({ error: "Server error" });
   }
-});
+}
+
+export const getUserProfile = async(req, res) => {
+  const { user } = req.user;
+  
+  try {
+    res.status(200).json({ 
+      name: user.name,
+      email: user.email
+     });
+  } catch (error) {
+    console.error("Get User Profile Error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
