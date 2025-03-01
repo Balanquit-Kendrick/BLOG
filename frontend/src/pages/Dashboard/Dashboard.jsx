@@ -4,11 +4,12 @@ import './dashboard.css'
 import Navigation from '@/components/navigation'
 import LeftSideBar from '@/components/left-sidebar'
 import RightSideBar from '@/components/right-sidebar'
+import Main from '@/components/main'
 
 const Dashboard = () => {
 
   return (
-    <div className="relative min-w-[1200px] bg-secondary min-h-screen flex items-center justify-center">
+    <div className="relative min-h-screen flex items-center justify-center">
       {<Loading />}
       <div className="relative z-0 w-[1200px] min-h-screen flex flex-col mx-auto">
         <Navigation />

@@ -7,13 +7,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import axiosInstance from "@/utils/axiosInstance";
+import { getUserInfo } from "@/store/auth";
 import { getInitials } from "@/utils/helper";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function DropdownMenuDemo() {
+export function ProfileDropDown({
+    sidebar
+}) 
 
+{
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
@@ -26,33 +29,31 @@ export function DropdownMenuDemo() {
         fetchUser();
     }, [])
 
-    const getUserInfo = async (token) => {
-        try {
-            const response = await axiosInstance.get("/users/auth/get-user", {
-                headers: {
-                    authorization: `Bearer ${token}`,
-                }
-            });
-            return response.data;
-        }
-        catch (error) {
-            console.error('Error:', error.response.data);
-        }
-    }
-
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate('/login');
     }
-
+    
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <div className='flex h-[32px] w-[32px] rounded-full justify-center items-center text-[12px] text-background bg-foreground cursor-pointer'>
-                    {getInitials(user?.name) ?? "Loading..."}
+                {sidebar ?
+                <div className="flex items-center gap-2 cursor-pointer w-[180px] h-[50px] mx-[10px] my-2 p-2 rounded-sm hover:bg-background drop-shadow-sm">
+                    <div className='flex h-[32px] w-[32px] rounded-full justify-center items-center text-[12px] text-background bg-foreground cursor-pointer border'>
+                        {getInitials(user?.name)}
+                    </div>
+                    <div className="text-[14px]">
+                        {user?.name}
+                    </div>
                 </div>
+                :
+                <div className='flex h-[32px] w-[32px] rounded-full justify-center items-center text-[12px] text-background bg-foreground cursor-pointer'>
+                    {getInitials(user?.name)}
+                </div>}
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
+            <DropdownMenuContent 
+            className="w-56"
+            side={sidebar ? "right" : "bottom"}>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
