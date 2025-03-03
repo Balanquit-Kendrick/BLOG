@@ -11,7 +11,7 @@ const Dashboard = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center">
       {<Loading />}
-      <div className="relative z-0 w-[1200px] min-h-screen flex flex-col mx-auto">
+      <div className="relative z-0 w-full min-h-screen flex flex-col mx-auto">
         <Navigation />
 
         <div className="flex flex-row flex-grow mt-12">

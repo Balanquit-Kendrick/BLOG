@@ -38,7 +38,7 @@ export function ProfileDropDown({
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 {sidebar ?
-                <div className="flex items-center gap-2 cursor-pointer w-[180px] h-[50px] mx-[10px] my-2 p-2 rounded-sm hover:bg-background drop-shadow-sm">
+                <div className="flex items-center gap-2 cursor-pointer w-[220px] h-[50px] mx-[10px] my-2 p-2 rounded-sm hover:bg-background drop-shadow-sm">
                     <div className='flex h-[32px] w-[32px] rounded-full justify-center items-center text-[12px] text-background bg-foreground cursor-pointer border'>
                         {getInitials(user?.name)}
                     </div>

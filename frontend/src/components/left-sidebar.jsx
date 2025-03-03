@@ -7,7 +7,7 @@ import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider, SidebarRail } 
 const LeftSideBar = ({...props}) => {
 
   return (
-    <div>
+    <div className='w-[250px] h-[calc(100vh-48px)] fixed left-0 top-[48px] flex items-center justify-center'>
       <SidebarProvider>
         <Sidebar collapsible="icon" {...props}>
           <SidebarHeader>

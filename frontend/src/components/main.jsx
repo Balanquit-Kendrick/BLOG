@@ -2,12 +2,8 @@ import React from 'react'
 
 const Main = () => {
   return (
-    <div className="flex-grow h-[calc(100vh-48px)] overflow-y-auto flex items-center justify-center">
-      <div className="w-full">
-        <div className="h-[2000px] bg-gray-300 top-12 flex flex-col items-center justify-center scrollbar">
-          <p>Main Content</p>
-        </div>
-      </div>
+    <div className="flex-1 overflow-y-auto bg-gray-100">
+      <div className="h-[200vh] bg-blue-200 flex justify-center items-center content-center">Long content here</div>
     </div>
   )
 }
