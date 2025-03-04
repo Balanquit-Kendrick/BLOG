@@ -3,54 +3,44 @@ import React, { useEffect, useState } from 'react'
 import { ProfileDropDown } from './profile-drop';
 import { LeftMenu } from './left-menu';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider, SidebarRail } from './ui/sidebar';
-import { BookOpen, Bot, Frame, PieChart, Settings2, SquareTerminal } from 'lucide-react';
+import { Archive, BookOpen, Bot, ChartBarStacked, CircleAlert, Contact, FileChartPie, Frame, Gem, House, PieChart, Settings2, SquareTerminal } from 'lucide-react';
 
 const LeftSideBar = ({...props}) => {
   const data = {
     navMain: [
       {
-        title: "Playground",
+        title: "Home",
         url: "#",
-        icon: SquareTerminal,
-        isActive: true,
+        icon: House,
+        isActive: false,
+      },
+      {
+        title: "Categories ",
+        url: "#",
+        icon: ChartBarStacked,
         items: [
           {
-            title: "History",
+            title: "Tech",
             url: "#",
           },
           {
-            title: "Starred",
+            title: "Business",
             url: "#",
           },
           {
-            title: "Settings",
+            title: "Lifestyle",
+            url: "#",
+          },
+          {
+            title: "Tutorials",
             url: "#",
           },
         ],
       },
       {
-        title: "Models",
+        title: "Popular Posts",
         url: "#",
-        icon: Bot,
-        items: [
-          {
-            title: "Genesis",
-            url: "#",
-          },
-          {
-            title: "Explorer",
-            url: "#",
-          },
-          {
-            title: "Quantum",
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: "Documentation",
-        url: "#",
-        icon: BookOpen,
+        icon: Gem,
         items: [
           {
             title: "Introduction",
@@ -71,9 +61,9 @@ const LeftSideBar = ({...props}) => {
         ],
       },
       {
-        title: "Settings",
+        title: "Recent Posts",
         url: "#",
-        icon: Settings2,
+        icon: FileChartPie,
         items: [
           {
             title: "General",
@@ -92,6 +82,35 @@ const LeftSideBar = ({...props}) => {
             url: "#",
           },
         ],
+      },
+      {
+        title: "Archives",
+        url: "#",
+        icon: Archive,
+        items: [
+          {
+            title: "2025",
+            url: "#",
+          },
+          {
+            title: "2024",
+            url: "#",
+          },
+          {
+            title: "2023",
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: "About",
+        url: "#",
+        icon: CircleAlert,
+      },
+      {
+        title: "Contact",
+        url: "#",
+        icon: Contact,
       },
     ],
     projects: [
