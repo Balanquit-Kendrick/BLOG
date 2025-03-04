@@ -24,7 +24,13 @@ export function ProfileDropDown({
         const fetchUser = async () => {
             const token = localStorage.getItem('token');
             const userInfo = await getUserInfo(token)
-            setUser(userInfo);
+            if(userInfo === 'Unauthorized'){
+                localStorage.removeItem('token');
+                navigate('/login')
+            }
+            else {
+                setUser(userInfo)
+            };
         }
         fetchUser();
     }, [])
