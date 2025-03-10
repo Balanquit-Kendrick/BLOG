@@ -21,19 +21,26 @@ export function ProfileDropDown({
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            const token = localStorage.getItem('token');
-            const userInfo = await getUserInfo(token)
-            if(userInfo === 'Unauthorized'){
-                localStorage.removeItem('token');
-                navigate('/login')
-            }
-            else {
-                setUser(userInfo)
-            };
-        }
         fetchUser();
     }, [])
+
+    useEffect(() => {
+        if (user) {
+            fetchUser();
+        }
+    }, [user]);
+
+    const fetchUser = async () => {
+        const token = localStorage.getItem('token');
+        const userInfo = await getUserInfo(token)
+        if(userInfo === 'Unauthorized'){
+            localStorage.removeItem('token');
+            navigate('/login')
+        }
+        else {
+            setUser(userInfo)
+        };
+    }
 
     const handleLogout = () => {
         localStorage.removeItem('token');
