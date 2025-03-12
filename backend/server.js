@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import users from './router/users.js';
+import posts from './router/posts.js';
 import { db } from './config/database.js';
 import User from './models/User.js';
 
@@ -24,6 +25,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/users', users);
+app.use('/posts', posts);
 
 app.listen(PORT, () => {
     console.log('listening on port', PORT)
