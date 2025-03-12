@@ -6,7 +6,6 @@ import { fileURLToPath } from 'url';
 import users from './router/users.js';
 import posts from './router/posts.js';
 import { db } from './config/database.js';
-import User from './models/User.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
