@@ -5,6 +5,7 @@ import { validateEmail } from '@/utils/helper';
 import { Button } from '@/components/ui/button';
 import { SignInForm } from "@/components/signin-form"
 import Loading from '@/components/loading';
+import { v4 as uuidv4 } from 'uuid'
 const SignUp = () => {
   const [ error, setError ] = useState('');
   const [ progress, setProgress ] = useState(13)
@@ -34,7 +35,9 @@ const SignUp = () => {
     setError("")
 
     try{
+      const id = uuidv4();
       const response = await axiosInstance.post("/users/auth/signup", {
+        id,
         name,
         email,
         password,
