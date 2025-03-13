@@ -24,11 +24,11 @@ export function ProfileDropDown({
         fetchUser();
     }, [])
 
-    useEffect(() => {
-        if (user) {
-            fetchUser();
-        }
-    }, [user]);
+    // useEffect(() => {
+    //     if (user) {
+    //         fetchUser();
+    //     }
+    // }, [user]);
 
     const fetchUser = async () => {
         const token = localStorage.getItem('token');

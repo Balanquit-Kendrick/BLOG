@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axiosInstance from '@/utils/axiosInstance';
 import { validateEmail } from '@/utils/helper';
 import { Button } from '@/components/ui/button';
-import { SignInForm } from "@/components/signin-form"
+import { SignUpForm } from "@/components/signup-form"
 import Loading from '@/components/loading';
 import { v4 as uuidv4 } from 'uuid'
 const SignUp = () => {
@@ -69,7 +69,7 @@ const SignUp = () => {
       <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-sm">
           {<Loading />}
-          <SignInForm handleSignUp={handleSignUp} error={error} message={res}/>
+          <SignUpForm handleSignUp={handleSignUp} error={error} message={res}/>
         </div>
       </div>
     </div>

@@ -40,11 +40,13 @@ export const signUpUser = async(req, res) => {
 
 
 export const signInUser = async(req, res) => {
+  console.log('signInUser', req.body);
+  
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ where: { email } });
-
+    
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -70,7 +72,8 @@ export const signInUser = async(req, res) => {
 }
 
 export const getUserProfile = async(req, res) => {
-  const user  = req.user.newUser;
+  const { user }  = req.user;
+
   try {
     res.status(200).json({ 
       id: user.id,
@@ -79,6 +82,23 @@ export const getUserProfile = async(req, res) => {
      });
   } catch (error) {
     console.error("Get User Profile Error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const deleteUserProfile = async(req, res) => {
+  const { id }  = req.body;
+  console.log('id', id);
+  
+  try {
+    const deleteUser = await User.findOne({ id: id });
+    await deleteUser.destroy();
+
+    res.status(201).json({ 
+      message: "Profile deleted successfully", 
+    });
+  } catch (error) {
+    console.error("Deleting Profile Failed:", error);
     res.status(500).json({ error: "Server error" });
   }
 };

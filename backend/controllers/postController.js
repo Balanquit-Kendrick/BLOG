@@ -29,10 +29,27 @@ export const createPost = async(req, res) => {
 export const deletePost = async(req, res) => {
   const { id } = req.body;
   try {
-    await Post.findOne({id});
+    await Post.delete({id});
     
     res.status(201).json({ 
       message: "Post deleted successfully", 
+    });
+
+  } catch (error) {
+    console.error("Signup Error:", error);
+    res.status(500).json({ error: "Server error" });
+    return error
+  }
+};
+
+export const updatePost = async(req, res) => {
+  try {
+    const post = await Post.findOne({id});
+
+    
+    res.status(201).json({ 
+      message: "All Post fetched successfully", 
+      post: post
     });
 
   } catch (error) {
@@ -58,3 +75,20 @@ export const fetchPost = async(req, res) => {
     return error
   }
 };
+
+export const fetchAllPost = async(req, res) => {
+  try {
+    const allPost = await Post.findAll();
+    
+    res.status(201).json({ 
+      message: "All Post fetched successfully", 
+      allPost: allPost
+    });
+
+  } catch (error) {
+    console.error("Signup Error:", error);
+    res.status(500).json({ error: "Server error" });
+    return error
+  }
+};
+

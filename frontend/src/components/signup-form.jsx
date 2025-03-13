@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 
-export function SignInForm({
+export function SignUpForm({
   className,
   error,
   response,
