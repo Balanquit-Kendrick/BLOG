@@ -3,7 +3,7 @@ import User from '../models/User.js';
 import jwt from 'jsonwebtoken'
 
 export const signUpUser = async(req, res) => {
-  const { name, email, password, confirmPassword } = req.body;
+  const { id, name, email, password, confirmPassword } = req.body;
   
   if (password !== confirmPassword) {
     return res.status(400).json({ error: "Passwords do not match" });
@@ -16,6 +16,7 @@ export const signUpUser = async(req, res) => {
     }
 
     const newUser = await User.create({
+      id,
       name,
       email,
       password, 
@@ -69,10 +70,10 @@ export const signInUser = async(req, res) => {
 }
 
 export const getUserProfile = async(req, res) => {
-  const { user } = req.user;
-  
+  const user  = req.user.newUser;
   try {
     res.status(200).json({ 
+      id: user.id,
       name: user.name,
       email: user.email
      });
