@@ -7,7 +7,7 @@ const router = express.Router();
 //Authentication routes
 router.post('/auth/signup', signUpUser);
 router.post('/auth/login', signInUser);
-router.delete('/auth/delete-user', deleteUserProfile);
+router.delete('/auth/delete-user', authenticateToken, deleteUserProfile);
 router.get('/auth/get-user', authenticateToken, getUserProfile);
 
 export default router;

@@ -7,10 +7,11 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Setting from "@/pages/Auth/Setting";
 import { getUserInfo } from "@/store/auth";
 import { getInitials } from "@/utils/helper";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function ProfileDropDown({
     sidebar
@@ -24,11 +25,11 @@ export function ProfileDropDown({
         fetchUser();
     }, [])
 
-    // useEffect(() => {
-    //     if (user) {
-    //         fetchUser();
-    //     }
-    // }, [user]);
+    useEffect(() => {
+        if (user) {
+            fetchUser();
+        }
+    }, [user]);
 
     const fetchUser = async () => {
         const token = localStorage.getItem('token');
@@ -74,11 +75,12 @@ export function ProfileDropDown({
                         Profile
                         {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
                     </DropdownMenuItem>
-
-                    <DropdownMenuItem>
-                        Settings
-                        {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
-                    </DropdownMenuItem>
+                    <Link to="/profile-setting">
+                        <DropdownMenuItem>
+                            Settings
+                            {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
+                        </DropdownMenuItem>
+                    </Link>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>

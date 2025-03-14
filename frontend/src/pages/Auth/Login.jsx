@@ -2,7 +2,7 @@ import Loading from '@/components/loading';
 import { LoginForm } from '@/components/login-form'
 import axiosInstance from '@/utils/axiosInstance';
 import { validateEmail } from '@/utils/helper';
-import { checkToken } from '@/utils/tokenChecker';
+import { checkToken } from '@/utils/tokenController';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 

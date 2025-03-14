@@ -6,6 +6,7 @@ import SignUp from './pages/Auth/SignUp';
 import LandingPage from './pages/LandingPage/LandingPage';
 import './App.css'
 import ProtectedRoute from './components/protected-routes';
+import Setting from './pages/Auth/Setting';
 
 const routes = (
   <Router>
@@ -13,6 +14,7 @@ const routes = (
       <Route path='/' exact element={<LandingPage />}/>
       <Route element={<ProtectedRoute/>}> 
         <Route path='/dashboard' exact element={<Dashboard />}/>
+        <Route path='/profile-setting' exact element={<Setting />}/>
       </Route>
       <Route path='/login' exact element={<Login />}/>
       <Route path='/signup' exact element={<SignUp />}/>

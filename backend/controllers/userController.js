@@ -22,14 +22,9 @@ export const signUpUser = async(req, res) => {
       password, 
     });
 
-    const accessToken = jwt.sign({ newUser }, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "36000m",    
-    });
-
     res.status(201).json({ 
       message: "User registered successfully", 
       user: newUser,
-      accessToken: accessToken
     });
 
   } catch (error) {
@@ -40,8 +35,6 @@ export const signUpUser = async(req, res) => {
 
 
 export const signInUser = async(req, res) => {
-  console.log('signInUser', req.body);
-  
   const { email, password } = req.body;
 
   try {
@@ -82,18 +75,17 @@ export const getUserProfile = async(req, res) => {
      });
   } catch (error) {
     console.error("Get User Profile Error:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: error });
   }
 };
 
 export const deleteUserProfile = async(req, res) => {
-  const { id }  = req.body;
-  console.log('id', id);
-  
+  const { user }  = req.user;
+  const id = user.id
   try {
-    const deleteUser = await User.findOne({ id: id });
+    const deleteUser = await User.findOne({where: {id: id} });
     await deleteUser.destroy();
-
+    
     res.status(201).json({ 
       message: "Profile deleted successfully", 
     });
