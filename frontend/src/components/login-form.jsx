@@ -15,6 +15,7 @@ import { useEffect, useState } from "react"
 export function LoginForm({
   className,
   handleLogin,
+  handleError,
   error,
   ...props
 }) 
@@ -27,19 +28,12 @@ export function LoginForm({
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
-    handleLogin(data); 
+    handleLogin(data);
   }
   
   useEffect(() => {
-    if (!error) return;
-
-    if (error.includes('fields')) {
-      setErrorFields(error);
-      setErrorEmail(''); 
-    } else if (error.includes('Invalid')) {
-      setErrorEmail(error);
-      setErrorFields(''); 
-    }
+    setErrorEmail(error.includes("Invalid") || error === "User not found" ? error : "");
+    setErrorFields(error.includes("fields") ? error : "");
   }, [error]);
 
   return (
@@ -60,6 +54,7 @@ export function LoginForm({
                   name="email"
                   placeholder="m@example.com"
                   className={errorEmail ? "border-red-500" : ""}
+                  onChange={handleError}
                   required
                 />
                 <Label className="text-red-500 font-light">{errorEmail ? '*'+errorEmail : ''}</Label>
